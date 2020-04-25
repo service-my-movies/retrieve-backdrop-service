@@ -13,6 +13,7 @@ import com.mymovies.service.IBackDropService;
 
 
 @Controller
+@RequestMapping("/backdrop")
 public class BackDropController implements IBackDropController {
 
 	@Autowired
