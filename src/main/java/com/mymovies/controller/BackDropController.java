@@ -34,7 +34,7 @@ public class BackDropController implements IBackDropController {
 		try {
 			listOfBackDrop = backdropService.retrieveBackDrop(movie_id);
 		} catch (Exception e) {
-			LOGGER.error("ERROR: " + e);
+			LOGGER.error("Unexpected Error From Controller: retrieveBackDrop: " + e);
 		}
 
 		return listOfBackDrop;
