@@ -42,6 +42,8 @@ public class BackDropService implements IBackDropService {
 
 		String url = serviceUrl == "" ? BASE_URL+movie_id+"/images"+API_KEY+Language : serviceUrl+movie_id;
 
+		LOGGER.info("@Get retrieveBackDrop Service URL : " + url);
+
 		try {
 			images = restTemplate.getForObject(url, ImageDTO.class);
 		}catch (Exception e) {
