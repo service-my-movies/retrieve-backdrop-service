@@ -6,12 +6,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 
 @Service
+@RefreshScope
 public class BackDropService implements IBackDropService {
 	
 	@Value("${resource.api.url.base}")
@@ -25,7 +27,10 @@ public class BackDropService implements IBackDropService {
 	
 	@Value("${resource.api.language}")
 	private String Language;
-	
+
+	@Value("${service.url}")
+	private String serviceUrl;
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(BackDropService.class);
 	
 	@Autowired
@@ -34,9 +39,11 @@ public class BackDropService implements IBackDropService {
 	public ArrayList<BackDropDTO> retrieveBackDrop(String movie_id) {
 	
 		ImageDTO images = null;
+
+		String url = serviceUrl != "" ? serviceUrl+movie_id : BASE_URL+movie_id+"/images"+API_KEY+Language;
 		
 		try {
-			images = restTemplate.getForObject(BASE_URL+movie_id+"/images"+API_KEY+Language, ImageDTO.class);
+			images = restTemplate.getForObject(url, ImageDTO.class);
 		}catch (Exception e) {
 			LOGGER.error("Unexpected Error From Service: retrieveBackDrop: " + e);
 		}
